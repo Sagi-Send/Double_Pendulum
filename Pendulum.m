@@ -63,12 +63,12 @@ x2 =  x1 + l2*sin(Yo(:,3));         y2 =  y1 - l2*cos(Yo(:,3));
 
 % GIF settings ----------------------------------------------------------
 gifName    = 'double_pendulum.gif';
-frameDelay = 0.02;     % s between frames in the GIF  (also controls playback)
+frameDelay = 0.02;     % s between frames in the GIF
 skip       = 1;        % =1 → write every step; raise to decimate GIF size
 
 for k = 1:skip:numel(To)
 
-    if ~isvalid(rod1);  break; end           % tidy exit if window closed
+    if ~isvalid(rod1);  break; end           % tidy exit
 
     % update geometry ---------------------------------------------------
     rod1.XData = [0     x1(k)];   rod1.YData = [0     y1(k)];
@@ -80,7 +80,7 @@ for k = 1:skip:numel(To)
     drawnow
 
     % -------- write frame to GIF --------------------------------------
-    frame = getframe(ax);                 % capture axes
+    frame = getframe(gcf);                 % capture axes
     [img,cm] = rgb2ind(frame.cdata,256);  % indexed colour for GIF
     if k == 1
         imwrite(img,cm,gifName,'gif','Loopcount',inf,'DelayTime',frameDelay);

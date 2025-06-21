@@ -3,7 +3,6 @@
 <p align="center">
   <img src="double_pendulum.gif" width="360" alt="Double-pendulum demo">
 </p>
----
 
 A MATLAB script that
 
