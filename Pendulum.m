@@ -48,7 +48,7 @@ grid(ax,'off');  hold(ax,'on')
 title(ax,'Double Pendulum Animation with $m_2$ Trajectory', ...
       'Interpreter','latex');  xlabel(ax,'x [m]');  ylabel(ax,'y [m]');
 
-% graphics objects ------------------------------------------------------
+% graphics objects
 rod1 = plot(ax,[0 0],[0 0],'LineWidth',2,'Color',[0.1 0.3 0.8]);
 rod2 = plot(ax,[0 0],[0 0],'LineWidth',2,'Color',[0.9 0.2 0.2]);
 bob1 = plot(ax,0,0,'o','MarkerSize',8,'MarkerFaceColor',[0.1 0.3 0.8], ...
@@ -57,11 +57,11 @@ bob2 = plot(ax,0,0,'o','MarkerSize',8,'MarkerFaceColor',[0.9 0.2 0.2], ...
                  'MarkerEdgeColor','none');
 traj = animatedline('Color',[0.4 0.4 0.4],'LineStyle','--');
 
-% coordinates -----------------------------------------------------------
+% coordinates
 x1 =  l1*sin(Yo(:,1));              y1 = -l1*cos(Yo(:,1));
 x2 =  x1 + l2*sin(Yo(:,3));         y2 =  y1 - l2*cos(Yo(:,3));
 
-% GIF settings ----------------------------------------------------------
+% GIF settings
 gifName    = 'double_pendulum.gif';
 frameDelay = 0.02;     % s between frames in the GIF
 skip       = 1;        % =1 → write every step; raise to decimate GIF size
@@ -70,7 +70,7 @@ for k = 1:skip:numel(To)
 
     if ~isvalid(rod1);  break; end           % tidy exit
 
-    % update geometry ---------------------------------------------------
+    % update geometry
     rod1.XData = [0     x1(k)];   rod1.YData = [0     y1(k)];
     rod2.XData = [x1(k) x2(k)];   rod2.YData = [y1(k) y2(k)];
     bob1.XData =  x1(k);          bob1.YData =  y1(k);
@@ -79,7 +79,7 @@ for k = 1:skip:numel(To)
 
     drawnow
 
-    % -------- write frame to GIF --------------------------------------
+    % write frame to GIF
     frame = getframe(gcf);                 % capture axes
     [img,cm] = rgb2ind(frame.cdata,256);  % indexed colour for GIF
     if k == 1
