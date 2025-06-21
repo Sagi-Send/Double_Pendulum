@@ -1,5 +1,10 @@
 # Double-Pendulum (MATLAB)
 
+<p align="center">
+  <img src="double_pendulum.gif" width="360" alt="Double-pendulum demo">
+</p>
+---
+
 A MATLAB script that
 
 1. solves the nonlinear double-pendulum equations with `ode45`,
@@ -23,8 +28,3 @@ git clone https://github.com/<your-user>/double-pendulum.git
 cd double-pendulum
 matlab -batch "run('double_pendulum.m')"   # CLI
 ```
----
-
-<p align="center">
-  <img src="double_pendulum.gif" width="360" alt="Double-pendulum demo">
-</p>
