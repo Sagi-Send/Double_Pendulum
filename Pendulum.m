@@ -40,50 +40,51 @@ dy = [theta1d;
       thetadd(2)];
 end
 
-%% ----- Animation -----------------------------------------------------
+%% ----- Animation + GIF writer ----------------------------------------
 figure(2); clf
-L = l1 + l2;                            % overall length for axis limits
-ax = axes('XLim',[-L L], ...
-          'YLim',[-L L], ...
-          'DataAspectRatio',[1 1 1]);   % keep equal aspect ratio
+L = l1 + l2;
+ax = axes('XLim',[-L L],'YLim',[-L L],'DataAspectRatio',[1 1 1]);
 grid(ax,'off');  hold(ax,'on')
+title(ax,'Double Pendulum Animation with $m_2$ Trajectory', ...
+      'Interpreter','latex');  xlabel(ax,'x [m]');  ylabel(ax,'y [m]');
 
-title(ax,'Double Pendulum Animation with $m_2$ Trajectory','FontSize',14,...
-    'Interpreter','latex')
-xlabel(ax,'x [m]');  ylabel(ax,'y [m]')
-
-% rods and bobs
+% graphics objects ------------------------------------------------------
 rod1 = plot(ax,[0 0],[0 0],'LineWidth',2,'Color',[0.1 0.3 0.8]);
 rod2 = plot(ax,[0 0],[0 0],'LineWidth',2,'Color',[0.9 0.2 0.2]);
-
 bob1 = plot(ax,0,0,'o','MarkerSize',8,'MarkerFaceColor',[0.1 0.3 0.8], ...
-                     'MarkerEdgeColor','none');
+                 'MarkerEdgeColor','none');
 bob2 = plot(ax,0,0,'o','MarkerSize',8,'MarkerFaceColor',[0.9 0.2 0.2], ...
-                     'MarkerEdgeColor','none');
-
-% trajectory of the lower bob (grey dashed line)
+                 'MarkerEdgeColor','none');
 traj = animatedline('Color',[0.4 0.4 0.4],'LineStyle','--');
 
-% pre-compute coordinates
-x1 =  l1*sin(Yo(:,1));             y1 = -l1*cos(Yo(:,1));
-x2 =  x1 + l2*sin(Yo(:,3));        y2 =  y1 - l2*cos(Yo(:,3));
+% coordinates -----------------------------------------------------------
+x1 =  l1*sin(Yo(:,1));              y1 = -l1*cos(Yo(:,1));
+x2 =  x1 + l2*sin(Yo(:,3));         y2 =  y1 - l2*cos(Yo(:,3));
 
-skip        = 1;      % show every time step (no skipping)
-frameDelay  = 0.005;   % seconds between frames (raise to slow further)
+% GIF settings ----------------------------------------------------------
+gifName    = 'double_pendulum.gif';
+frameDelay = 0.02;     % s between frames in the GIF  (also controls playback)
+skip       = 1;        % =1 → write every step; raise to decimate GIF size
 
 for k = 1:skip:numel(To)
 
-    if ~isvalid(rod1); break; end      % stop neatly if figure is closed
+    if ~isvalid(rod1);  break; end           % tidy exit if window closed
 
-    % update geometry
+    % update geometry ---------------------------------------------------
     rod1.XData = [0     x1(k)];   rod1.YData = [0     y1(k)];
     rod2.XData = [x1(k) x2(k)];   rod2.YData = [y1(k) y2(k)];
     bob1.XData =  x1(k);          bob1.YData =  y1(k);
     bob2.XData =  x2(k);          bob2.YData =  y2(k);
-
-    % add current point to trajectory
     addpoints(traj,x2(k),y2(k))
 
-    drawnow             % update figure
-    pause(frameDelay)   % slow-down
+    drawnow
+
+    % -------- write frame to GIF --------------------------------------
+    frame = getframe(ax);                 % capture axes
+    [img,cm] = rgb2ind(frame.cdata,256);  % indexed colour for GIF
+    if k == 1
+        imwrite(img,cm,gifName,'gif','Loopcount',inf,'DelayTime',frameDelay);
+    else
+        imwrite(img,cm,gifName,'gif','WriteMode','append','DelayTime',frameDelay);
+    end
 end
