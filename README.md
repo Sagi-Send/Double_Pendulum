@@ -23,4 +23,6 @@ git clone https://github.com/<your-user>/double-pendulum.git
 cd double-pendulum
 matlab -batch "run('double_pendulum.m')"   # CLI
 
+---
+
 ![Double-pendulum demo](double_pendulum.gif)
