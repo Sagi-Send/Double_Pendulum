@@ -14,12 +14,6 @@ A MATLAB script that
 
 ---
 
-## Requirements
-* MATLAB R2018b or newer  
-  (older versions work too if you replace the Greek-letter variable names).
-
----
-
 ## How to run
 
 ```bash
