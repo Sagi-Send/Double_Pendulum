@@ -8,6 +8,12 @@ A compact MATLAB project that **numerically solves** the nonlinear double-pendul
 
 ---
 
+## 📖 Theory
+The double-pendulum is a classic example of a chaotic Hamiltonian system.
+The system of coupled, second-order ODEs is derived via Lagrange’s equations for two point masses connected by massless rods.
+
+---
+
 ## 🗂️ Repository layout
 
 | File / folder | Purpose |
